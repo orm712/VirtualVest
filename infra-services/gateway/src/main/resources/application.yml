@@ -27,5 +27,5 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-encrypt:
-  key: ${ENCRYPT_KEY}
+#encrypt:
+#  key: ${ENCRYPT_KEY}
