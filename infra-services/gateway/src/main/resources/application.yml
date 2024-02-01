@@ -22,7 +22,7 @@ spring:
       name: gateway
       profile: deploy
   config:
-    import: "optional:configserver:http://39.116.209.82:8888/"
+    import: "optional:configserver:http://localhost:8888/"
 
   main:
     allow-bean-definition-overriding: true
