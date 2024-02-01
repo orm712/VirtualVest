@@ -22,10 +22,10 @@ spring:
       name: gateway
       profile: deploy
   config:
-    import: "optional:configserver:http://39.116.209.82:8888/"
+    import: "optional:configserver:https://google.com/"
 
   main:
     allow-bean-definition-overriding: true
 
-#encrypt:
-#  key: ${ENCRYPT_KEY}
+encrypt:
+  key: ${ENCRYPT_KEY}
