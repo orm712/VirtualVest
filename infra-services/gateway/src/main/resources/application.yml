@@ -22,7 +22,7 @@ spring:
       name: gateway
       profile: deploy
   config:
-    import: "optional:configserver:https://google.com/"
+    import: "optional:configserver:http://39.116.209.82:8761/"
 
   main:
     allow-bean-definition-overriding: true
