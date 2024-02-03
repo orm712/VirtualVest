@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  auth-service:
+    image: auth-service:latest
+    container_name: auth-container
+    restart: always
+    build: .
+    ports:
+      - "8200:8200"
+    depends_on:
+      - db
+    environment:
+      - ENCRYPT_KEY=${ENCRYPT_KEY}
+
+  db:
+    image: mysql:8.0.33
+    restart: always
+    ports:
+      - "3200:3200"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - ./db_data:/var/lib/mysql_auth
