@@ -6,14 +6,14 @@ spring:
       name: auth
       profile: develop
   config:
-    import: "optional:configserver:http://192.168.55.119:8888"
+    import: "optional:configserver:http://39.116.209.82:8888"
 
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.55.119:8761/eureka/
+      defaultZone: http://39.116.209.82:8761/eureka/
   instance:
-    hostname: 192.168.55.119
+    hostname: 39.116.209.82
 
 encrypt:
   key : ${ENCRYPT_KEY}
