@@ -10,14 +10,14 @@ spring:
   application:
     name: apigateway-service
   cloud:
-#    gateway:
-#      routes:
-#        - id: auth-service
-#          uri : lb://auth-service
-#          predicates:
-#            - Path = /api/v1/auth/**
-#          filters:
-#            - StripPrefix=0
+    gateway:
+      routes:
+        - id: auth-service
+          uri : lb://auth-service
+          predicates:
+            - Path = /api/v1/auth/**
+          filters:
+            - StripPrefix=0
     config:
       name: gateway
       profile: deploy
