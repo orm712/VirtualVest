@@ -15,7 +15,7 @@ spring:
         - id: auth-service
           uri : lb://AUTH-SERVICE
           predicates:
-            - Path = /api/v1/auth/**
+            - Path=/api/v1/auth/**
           filters:
             - StripPrefix=0
     config:
