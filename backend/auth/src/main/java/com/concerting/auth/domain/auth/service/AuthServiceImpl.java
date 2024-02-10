@@ -7,10 +7,12 @@ import com.concerting.auth.domain.auth.repository.AuthRepository;
 import com.concerting.auth.global.security.service.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
+@RefreshScope
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService{
