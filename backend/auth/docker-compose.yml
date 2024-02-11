@@ -3,7 +3,7 @@ services:
   auth-service:
     image: auth-service:latest
     container_name: auth-container
-    restart: always
+    restart: unless-stopped
     build: .
     ports:
       - "8200:8200"
@@ -21,7 +21,7 @@ services:
   database:
     image: mysql:8.0.33
     container_name: auth_db_container
-    restart: always
+    restart: unless-stopped
     ports:
       - "3200:3306"
     environment:
@@ -33,6 +33,19 @@ services:
       TZ: ${TZ}
     volumes:
       - ./db_data:/var/lib/mysql
+    networks:
+      - auth-network
+
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     networks:
       - auth-network
 

@@ -1,5 +1,6 @@
 package com.concerting.auth.domain.auth.controller;
 
+import com.concerting.auth.domain.auth.dto.request.SignInReqDTO;
 import com.concerting.auth.domain.auth.dto.request.SignUpReqDTO;
 import com.concerting.auth.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,12 @@ public class AuthController {
         log.info("signup");
         authService.signup(signUpReqDTO);
         return ResponseEntity.ok("회원가입 성공");
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> signIn(@RequestBody SignInReqDTO signInReqDTO){
+        log.info("signin");
+
+        return authService.signIn(signInReqDTO);
     }
 }
