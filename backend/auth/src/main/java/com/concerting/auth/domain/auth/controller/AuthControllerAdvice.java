@@ -6,20 +6,21 @@ import com.concerting.auth.domain.auth.exception.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class AuthControllerAdvice {
-    @ExceptionHandler
+    @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<String> handleDatabaseException(DatabaseException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(PasswordNotMatchException.class)
     public ResponseEntity<String> handleException(PasswordNotMatchException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
