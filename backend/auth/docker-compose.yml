@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   auth-service:
-    image: auth-service:latest
+    image: bangjinseong/auth-service:latest
     container_name: auth-container
     restart: unless-stopped
     build: .
