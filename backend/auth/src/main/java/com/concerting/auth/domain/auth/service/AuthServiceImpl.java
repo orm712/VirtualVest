@@ -5,6 +5,8 @@ import com.concerting.auth.domain.auth.dto.request.SignUpReqDTO;
 import com.concerting.auth.domain.auth.dto.response.SignInResDTO;
 import com.concerting.auth.domain.auth.entity.User;
 import com.concerting.auth.domain.auth.exception.DatabaseException;
+import com.concerting.auth.domain.auth.exception.PasswordNotMatchException;
+import com.concerting.auth.domain.auth.exception.UserNotFoundException;
 import com.concerting.auth.domain.auth.repository.AuthRepository;
 import com.concerting.auth.global.redis.repository.RefreshTokenRedisRepository;
 import com.concerting.auth.global.security.entity.RefreshToken;
@@ -48,10 +50,10 @@ public class AuthServiceImpl implements AuthService{
         log.info("signin");
 
         User user = authRepository.findByEmail(signInReqDTO.email())
-                .orElseThrow(() -> new DatabaseException("존재하지 않는 사용자"));
+                .orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자"));
 
         if(!passwordEncoder.matches(signInReqDTO.password(), user.getPassword())){
-            throw new DatabaseException("비밀번호가 일치하지 않습니다.");
+            throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다.");
         }
 
         Token token = jwtProvider.generateToken(user.getEmail(), user.getRole());
