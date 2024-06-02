@@ -3,7 +3,7 @@ server:
 
 eureka:
   instance:
-    hostname: concerting
+    hostname: virtualvest
   client:
     register-with-eureka: false
     fetch-registry: false
