@@ -4,7 +4,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://152.69.232.209:8761/eureka/
+      defaultZone: http://192.168.55.119:8761/eureka/
 
 spring:
   application:
@@ -22,7 +22,7 @@ spring:
       name: gateway
       profile: deploy
   config:
-    import: "optional:configserver:http://152.69.232.209:8888/"
+    import: "optional:configserver:http://192.168.55.119:8888/"
 
   main:
     allow-bean-definition-overriding: true
