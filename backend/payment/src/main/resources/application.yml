@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: payment-service
+  cloud:
+    config:
+      name: payment
+      profile: develop
+  config:
+    import: "optional:configserver:http://152.69.232.209:8888"
+
+
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://192.168.55.119:8761/eureka/
+#  instance:
+#    hostname: 192.168.55.119
+#
+#encrypt:
+#  key : ${ENCRYPT_KEY}
