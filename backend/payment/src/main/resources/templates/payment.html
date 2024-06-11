@@ -27,6 +27,11 @@
                     $.ajax({
                         type: 'POST',
                         url: '/verifyIamport/' + rsp.imp_uid,
+                        data : JSON.stringify({
+                            userSeq : 1, //임시
+                            balance : amount
+                        }),
+                        contentType : 'application/json',
                         dataType : 'json'
                     }).done(function(data) {
                         if(rsp.paid_amount === data.response.amount){

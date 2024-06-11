@@ -37,13 +37,16 @@ public class PaymentServiceImpl implements PaymentService {
     public void chargeBalance(PayReqDTO payReqDTO){
 
         IamportResponse<com.siot.IamportRestClient.response.Payment> paymentResponse = iamportClient.paymentByImpUid(payReqDTO.getImp_uid());
-
+        log.info("충전 service 시작");
+        log.info(paymentResponse.getResponse().getStatus());
         if (paymentResponse.getResponse() != null && paymentResponse.getResponse().getStatus().equals("paid")) {
             Payment payment = paymentRepository.findByUserSeq(payReqDTO.getUserSeq())
                     .orElseThrow(() -> new IllegalArgumentException("Invalid user sequence"));
 
-            payment.setBalance(payment.getBalance() + payment.getBalance());
+            log.info(payment.getBalance() + " "+ payReqDTO.getBalance());
+            payment.setBalance(payment.getBalance() + payReqDTO.getBalance());
             paymentRepository.save(payment);
+            log.info("충전 service 완료");
         } else {
             throw new IllegalArgumentException("Payment verification failed");
         }

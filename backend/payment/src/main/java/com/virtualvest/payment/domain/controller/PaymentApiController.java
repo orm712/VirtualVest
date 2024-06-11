@@ -28,8 +28,9 @@ public class PaymentApiController {
     private final PaymentService paymentService;
 
     @PostMapping("/verifyIamport/{imp_uid}")
-    public ResponseEntity<?> paymentByImpUid(@PathVariable("imp_uid") String imp_uid, @RequestParam long userSeq, @RequestParam int amount) throws Exception {
-        PayReqDTO payReqDTO = new PayReqDTO(imp_uid, userSeq, amount);
+    public ResponseEntity<?> paymentByImpUid(@PathVariable("imp_uid") String imp_uid, @RequestBody PayReqDTO payReqDTO) throws Exception {
+        payReqDTO.setImp_uid(imp_uid);
+        log.info("충전 시작");
         try {
             paymentService.chargeBalance(payReqDTO);
             return ResponseEntity.ok("충전 성공");
