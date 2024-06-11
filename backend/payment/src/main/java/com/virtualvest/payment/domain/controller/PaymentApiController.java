@@ -27,57 +27,23 @@ public class PaymentApiController {
 
     private final PaymentService paymentService;
 
-    @Value("${iamport.api_key}")
-    private String apiKey;
-
-    @Value("${iamport.api_secret}")
-    private String apiSecret;
-
-    private IamportClient iamportClient;
-
-    @PostConstruct
-    public void init() {
-        this.iamportClient = new IamportClient(apiKey, apiSecret);
-    }
-
-    @PostMapping("/order/payment")
-    public ResponseEntity<String> paymentComplete(@RequestBody PayReqDTO payReqDTO) throws IOException {
-//        try {
-//
-//
-//
-////            iamportClient.paymentByImpUid()
-//            paymentService.saveOrder(payReqDTO);
-//            return ResponseEntity.ok().build();
-//        } catch (RuntimeException e) {
-////            String token = refundService.getToken(apiKey, apiSecret);
-////            refundService.refundWithToken(token, orderNumber, e.getMessage());
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-
-//        String merchantUid = "merchant_" + System.currentTimeMillis();  // Unique merchant ID
-//
-//
-//
-//        OnetimePaymentData onetimePayment = new OnetimePaymentData(merchantUid, new BigDecimal(payReqDTO.getBalance()),);
-//        IamportResponse<Payment> response = iamportClient.onetimePayment(onetimePayment);
-//
-//        Payment payment = response.getResponse();
-
-
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/verifyIamport/{imp_uid}")
-    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid) throws Exception {
-        return iamportClient.paymentByImpUid(imp_uid);
+    public ResponseEntity<?> paymentByImpUid(@PathVariable("imp_uid") String imp_uid, @RequestParam long userSeq, @RequestParam int amount) throws Exception {
+        PayReqDTO payReqDTO = new PayReqDTO(imp_uid, userSeq, amount);
+        try {
+            paymentService.chargeBalance(payReqDTO);
+            return ResponseEntity.ok("충전 성공");
+        } catch (Exception e) {
+            log.error("충전 실패", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("충전 실패");
+        }
     }
 
-
-    @PostMapping("/payment/validation/{imp_uid}")
-    public IamportResponse<Payment> validateIamport(@PathVariable String imp_uid) {
-        IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
-        log.info("결제 요청 응답. 결제 내역 - 주문 번호: {}", payment.getResponse().getMerchantUid());
-        return payment;
+    //계정 생성 후 계좌 생성
+    @PostMapping("/createAccount")
+    public ResponseEntity<?> createAccount(@RequestParam long userSeq){
+        paymentService.createAccount(userSeq);
+        return ResponseEntity.ok("계좌 생성 성공");
     }
+
 }
