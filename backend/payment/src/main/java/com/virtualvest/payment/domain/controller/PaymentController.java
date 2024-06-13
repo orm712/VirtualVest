@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PaymentController {
-    @GetMapping("/payment")
+    @GetMapping("/api/v1/payment/pay")
     public String paymentPage() {
         return "payment";
     }
