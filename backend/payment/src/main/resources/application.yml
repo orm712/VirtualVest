@@ -4,7 +4,7 @@ spring:
   cloud:
     config:
       name: payment
-      profile: develop
+      profile: deploy
   config:
     import: "optional:configserver:http://152.69.232.209:8888"
 
