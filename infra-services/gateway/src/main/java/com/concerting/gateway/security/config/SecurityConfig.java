@@ -48,6 +48,7 @@ public class SecurityConfig {
             .formLogin(formLogin -> formLogin.disable())
             .authorizeExchange(exchanges -> exchanges
                     .pathMatchers("/api/v1/auth/**").permitAll()
+                    .pathMatchers("/api/v1/payment/**").permitAll()
                     .anyExchange().permitAll()
             )
             .addFilterAt(new JwtFilter(jwtProvider), SecurityWebFiltersOrder.AUTHENTICATION)

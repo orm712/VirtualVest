@@ -18,6 +18,12 @@ spring:
             - Path=/api/v1/auth/**
           filters:
             - StripPrefix=0
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payment/**
+          filters:
+            - StripPrefix=0
     config:
       name: gateway
       profile: deploy
