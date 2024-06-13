@@ -48,6 +48,8 @@ dependencies {
 	//포트원
 //	implementation 'com.github.portone:portone-java-sdk:1.0.0'
 	implementation 'com.github.iamport:iamport-rest-client-java:0.1.6'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 }
 
 dependencyManagement {
