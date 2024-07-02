@@ -17,7 +17,6 @@ services:
     networks:
       - payment-network
 
-
   database:
     image: mysql:8.0.33
     container_name: payment_db_container

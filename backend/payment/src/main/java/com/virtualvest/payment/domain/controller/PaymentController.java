@@ -12,5 +12,4 @@ public class PaymentController {
     public String paymentPage() {
         return "payment";
     }
-
 }
