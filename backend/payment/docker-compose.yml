@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  payment-service:
+    image: bangjinseong/payment-service:latest
+    container_name: payment-container
+    restart: unless-stopped
+    build: .
+    ports:
+      - "8300:8300"
+    depends_on:
+      - database
+    environment:
+      - ENCRYPT_KEY=${ENCRYPT_KEY}
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - payment-network
+
+  database:
+    image: mysql:8.0.33
+    container_name: payment_db_container
+    restart: unless-stopped
+    ports:
+      - "3300:3306"
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - ./db_data:/var/lib/mysql
+    networks:
+      - payment-network
+
+networks:
+  payment-network:

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script>
+        var IMP = window.IMP;
+        IMP.init("imp31753462");
+
+        function requestPay(amount) {
+            IMP.request_pay(
+                {
+                    pg: "kakaopay.TC0ONETIME", //Test는 TC0ONETIME
+                    pay_method: "card",
+                    merchant_uid: "merchant_" + new Date().getTime(),
+                    name: "안녕 이건 테스트양",
+                    amount: amount,
+                    buyer_email: 'test@naver.com',
+                    buyer_name: '나이트워커',
+                    buyer_tel: '010-1234-5678',
+                    buyer_addr: '광주랑께',
+                    buyer_postcode: '123-456',
+                },
+                function (rsp) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/verifyIamport/' + rsp.imp_uid,
+                        data : JSON.stringify({
+                            userSeq : 1, //임시
+                            balance : amount
+                        }),
+                        contentType : 'application/json',
+                        dataType : 'json'
+                    }).done(function(data) {
+                        if(rsp.paid_amount === data.response.amount){
+                            alert("결제 성공");
+                        } else {
+                            alert("결제 실패");
+                        }
+                    });
+                });
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>테스트 결제창</title>
+</head>
+<body>
+    <h1>골라골라</h1>
+    <button onclick="requestPay(1000)">1000원</button>
+    <button onclick="requestPay(5000)">5000원</button>
+    <button onclick="requestPay(10000)">10000원</button>
+    <button onclick="requestPay(50000)">50000원</button>
+</body>
+</html>
