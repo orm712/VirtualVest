@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  stock-service:
+    image: bangjinseong/stock-service:latest
+    container_name: stock-container
+    restart: unless-stopped
+    build: .
+    ports:
+      - "8400:8400"
+    depends_on:
+      - database
+    environment:
+      - ENCRYPT_KEY=${ENCRYPT_KEY}
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - stock-network
+
+  database:
+    image: mysql:8.0.33
+    container_name: stock_db_container
+    restart: unless-stopped
+    ports:
+      - "3400:3306"
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - ./db_data:/var/lib/mysql
+    networks:
+      - stock-network
+
+networks:
+  stock-network:
