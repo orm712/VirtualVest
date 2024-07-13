@@ -11,14 +11,14 @@ spring:
 #    bootstrap-servers: 152.69.232.209:9092
 
   config:
-    import: "optional:configserver:http://140.83.85.62:8888"
+    import: "optional:configserver:http://13.237.183.108:8888"
 
 eureka:
   client:
     service-url:
-      defaultZone: http://140.83.85.62:8761/eureka/
+      defaultZone: http://13.237.183.108:8761/eureka/
   instance:
-    hostname: 140.83.85.62
+    hostname: 13.237.183.108
 
 #management:
 #  endpoints:
