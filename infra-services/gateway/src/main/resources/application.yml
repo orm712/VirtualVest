@@ -28,7 +28,7 @@ spring:
       name: gateway
       profile: deploy
   config:
-    import: "optional:configserver:http://140.83.85.62:8888/"
+    import: "optional:configserver:http://13.237.183.108:8888/"
 
   main:
     allow-bean-definition-overriding: true
